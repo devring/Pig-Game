@@ -7,94 +7,200 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 */
 
-var scores,currentScore,activePlayer,gamePlaying, valDice;
+
+
+var scores,currentScore,activePlayer,gamePlaying,finalScore;
+
+
 
 init();
 
+
+
 document.querySelector('.btn-roll').addEventListener('click',function(){
-           if(gamePlaying){
-           var dice=Math.floor(Math.random()*6)+1;
-           document.querySelector('.dice').style.display='block';
-           document.querySelector('.dice').src='dice-'+dice+'.png';
-           if(currentScore===0)
-           {
-             valDice=0;
-           }
-           if(valDice===6 && dice===6)
+
+          if(gamePlaying){
+
+          var dice=Math.floor(Math.random()*6)+1;
+
+          var dice1=Math.floor(Math.random()*6)+1;
+
+
+
+          document.querySelector('.dice').style.display = 'block';
+
+          document.querySelector('.dice1').style.display = 'block';
+
+          document.querySelector('.dice').src = 'https://raw.githubusercontent.com/jonasschmedtmann/complete-javascript-course/master/4-DOM-pig-game/starter/dice-' + dice + '.png';
+
+          document.querySelector('.dice1').src = 'https://raw.githubusercontent.com/jonasschmedtmann/complete-javascript-course/master/4-DOM-pig-game/starter/dice-' + dice1 + '.png';
+
+
+
+           if(dice!==1 && dice1!==1)
+
           {
-              document.getElementById('score-'+activePlayer).textContent='0';
-              scores[activePlayer]=0;
-              nextPlayer();
 
-           }
-           else if(dice!==1)
-           {
-               // scores[activePlayer]+=dice;
-               currentScore+=dice;
-               // document.getElementById('score-'+activePlayer).textContent=scores[activePlayer];
-               document.getElementById('current-'+activePlayer).textContent=currentScore;
+              // scores[activePlayer]+=dice;
 
-           }
-           else {
-                   nextPlayer();
+              currentScore+=dice+dice1;
 
-           }
-           valDice=dice;
+              // document.getElementById('score-'+activePlayer).textContent=scores[activePlayer];
+
+              document.getElementById('current-'+activePlayer).textContent=currentScore;
+
+
+
+          }
+
+            else {
+
+                  nextPlayer();
+
+
+
+          }
+
 }
-})
+
+});
+
+
 
 document.querySelector('.btn-hold').addEventListener('click',function(){
-               if(gamePlaying){
-               scores[activePlayer]+=currentScore;
-               document.getElementById('score-'+activePlayer).textContent=scores[activePlayer];
-               if(scores[activePlayer]>=20)
-               {
-                 document.getElementById('name-'+activePlayer).textContent='Winner!';
-                 document.querySelector('.dice').style.display='none';
-                 document.querySelector('.player-'+activePlayer+'-panel').classList.add('winner');
-                 gamePlaying=false;
-               }
-               else{
-               nextPlayer();
-             }
+
+              if(gamePlaying){
+
+              scores[activePlayer]+=currentScore;
+
+              document.getElementById('score-'+activePlayer).textContent=scores[activePlayer];
+
+              if(scores[activePlayer]>=finalScore)
+
+              {
+
+                document.getElementById('name-'+activePlayer).textContent='Winner!';
+
+                document.querySelector('.dice').style.display='none';
+
+                document.querySelector('.dice1').style.display='none';
+
+                document.querySelector('.player-'+activePlayer+'-panel').classList.add('winner');
+
+                gamePlaying=false;
+
+              }
+
+              else{
+
+              nextPlayer();
+
+            }
+
+
 
 }
-})
+
+});
+
+
 
 document.querySelector('.btn-new').addEventListener('click',init);
 
 
-function nextPlayer()
-{
-  currentScore=0;
-  activePlayer===0 ? activePlayer=1 : activePlayer=0;
-  document.getElementById('current-0').textContent='0';
-  document.getElementById('current-1').textContent='0';
 
-  document.querySelector('.player-0-panel').classList.toggle('active');
-  document.querySelector('.player-1-panel').classList.toggle('active');
+function nextPlayer()
+
+{
+
+ currentScore=0;
+
+ activePlayer===0 ? activePlayer=1 : activePlayer=0;
+
+ document.getElementById('current-0').textContent='0';
+
+ document.getElementById('current-1').textContent='0';
+
+
+
+ document.querySelector('.player-0-panel').classList.toggle('active');
+
+ document.querySelector('.player-1-panel').classList.toggle('active');
+
 }
 
 
+
+document.querySelector('.btn-score').addEventListener('click',function(){
+
+           var input = document.querySelector('.final-score').value;
+
+           if(input)
+
+           {
+
+             finalScore = input;
+
+           }
+
+           else{
+
+             finalScore=20;
+
+           }
+
+
+
+});
+
+
+
+
+
+
+
 function init()
+
 {
-   scores=[0,0];
-   currentScore=0;
-   activePlayer=0;
-   gamePlaying=true;
 
-   document.querySelector('.dice').style.display='none';
-   document.getElementById('score-0').textContent='0';
-   document.getElementById('score-1').textContent='0';
-   document.getElementById('current-0').textContent='0';
-   document.getElementById('current-1').textContent='0';
-   document.getElementById('name-0').textContent='Player 1';
-   document.getElementById('name-1').textContent='Player 2';
+  scores=[0,0];
+
+  currentScore=0;
+
+  activePlayer=0;
+
+  gamePlaying=true;
+
+  finalScore=20;
 
 
-   document.querySelector('.player-0-panel').classList.remove('winner');
-   document.querySelector('.player-1-panel').classList.remove('winner');
-   document.querySelector('.player-0-panel').classList.remove('active');
-   document.querySelector('.player-1-panel').classList.remove('active');
-   document.querySelector('.player-0-panel').classList.add('active');
+
+  document.querySelector('.dice').style.display='none';
+
+  document.querySelector('.dice1').style.display='none';
+
+  document.getElementById('score-0').textContent='0';
+
+  document.getElementById('score-1').textContent='0';
+
+  document.getElementById('current-0').textContent='0';
+
+  document.getElementById('current-1').textContent='0';
+
+  document.getElementById('name-0').textContent='Player 1';
+
+  document.getElementById('name-1').textContent='Player 2';
+
+
+
+  document.querySelector('.player-0-panel').classList.remove('winner');
+
+  document.querySelector('.player-1-panel').classList.remove('winner');
+
+  document.querySelector('.player-0-panel').classList.remove('active');
+
+  document.querySelector('.player-1-panel').classList.remove('active');
+
+  document.querySelector('.player-0-panel').classList.add('active');
+
 }
